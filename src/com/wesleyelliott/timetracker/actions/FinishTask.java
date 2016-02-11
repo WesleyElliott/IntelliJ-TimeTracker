@@ -25,6 +25,6 @@ public class FinishTask extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         stopwatch.stopTimer();
-        TimeTaskDialog.main(null);
+        TimeTaskDialog.main(e.getProject());
     }
 }

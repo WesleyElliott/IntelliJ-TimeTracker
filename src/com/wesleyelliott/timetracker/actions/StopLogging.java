@@ -25,7 +25,7 @@ public class StopLogging extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        NotificationUtil.showNotification("Stopped logging for project - " + RepoHelper.getInstance().getCurrentBranch(getEventProject(e)));
+        NotificationUtil.showNotification("Stopped logging for task - " + RepoHelper.getInstance().getCurrentBranch(getEventProject(e)));
         stopwatch.pauseTimer();
     }
 }

@@ -16,4 +16,11 @@ public class StringUtil {
         formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
         return formatter.format(date);
     }
+
+    public static String dateToString(long time) {
+        Date date = new Date(time);
+        DateFormat formatter = new SimpleDateFormat("yyyy/MM/d - HH:mm:ss");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+        return formatter.format(date);
+    }
 }

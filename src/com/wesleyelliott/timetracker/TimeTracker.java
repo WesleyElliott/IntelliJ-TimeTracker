@@ -5,7 +5,6 @@ import com.intellij.openapi.project.Project;
 import com.wesleyelliott.timetracker.ui.StatusBarManager;
 import com.wesleyelliott.timetracker.util.FileUtil;
 import com.wesleyelliott.timetracker.util.ProjectAwares;
-import com.wesleyelliott.timetracker.util.StringUtil;
 
 /**
  * Created by Wesley on 2016/02/11.
@@ -38,18 +37,15 @@ public class TimeTracker extends AbstractProjectComponent {
     public void projectOpened() {
         projectAwares.opened();
         Long elapsedTime = FileUtil.getElapsedTime(myProject);
-
-        System.out.println("Getting saved time: " + StringUtil.elapsedTimeToString(elapsedTime));
         Stopwatch.getInstance().setElapsedTime(elapsedTime);
     }
 
     @Override
     public void projectClosed() {
         Long elapsedTime = Stopwatch.getInstance().getElapsedTime();
-        System.out.println("Saving time: " + StringUtil.elapsedTimeToString(elapsedTime));
         FileUtil.saveElapsedTime(myProject, elapsedTime);
+
         projectAwares.closed();
         Stopwatch.getInstance().restartTimer();
     }
-
 }

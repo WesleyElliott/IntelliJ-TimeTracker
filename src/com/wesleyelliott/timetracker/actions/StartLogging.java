@@ -25,7 +25,7 @@ public class StartLogging extends DumbAwareAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        NotificationUtil.showNotification("Started logging for project - " + RepoHelper.getInstance().getCurrentBranch(getEventProject(e)));
+        NotificationUtil.showNotification("Started logging for task - " + RepoHelper.getInstance().getCurrentBranch(getEventProject(e)));
 
         if (stopwatch.hasStarted()) {
             stopwatch.resumeTimer();

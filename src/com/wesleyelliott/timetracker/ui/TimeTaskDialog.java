@@ -1,5 +1,8 @@
 package com.wesleyelliott.timetracker.ui;
 
+import com.intellij.openapi.project.Project;
+import com.wesleyelliott.timetracker.TimeTracker;
+import com.wesleyelliott.timetracker.util.FileUtil;
 import com.wesleyelliott.timetracker.util.NotificationUtil;
 import com.wesleyelliott.timetracker.util.RepoHelper;
 import com.wesleyelliott.timetracker.Stopwatch;
@@ -17,7 +20,10 @@ public class TimeTaskDialog extends JDialog {
     private Stopwatch stopwatch = Stopwatch.getInstance();
     private RepoHelper repoHelper = RepoHelper.getInstance();
 
-    public TimeTaskDialog() {
+    private Project project;
+
+    public TimeTaskDialog(Project project) {
+        this.project = project;
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -49,12 +55,14 @@ public class TimeTaskDialog extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         timeElapsedLabel.setText("Time Taken: " +  StringUtil.elapsedTimeToString(stopwatch.getElapsedTime()));
-        projectLabel.setText("Project: " + repoHelper.getCurrentBranch());
+        projectLabel.setText("Task: " + repoHelper.getCurrentBranch());
     }
 
     private void onOK() {
+        FileUtil.saveTaskInHistory(project, RepoHelper.getInstance().getCurrentBranch(project), Stopwatch.getInstance().getElapsedTime());
+        FileUtil.saveElapsedTime(project, 0L);
+        NotificationUtil.showNotification("Finished logging for task - " + RepoHelper.getInstance().getCurrentBranch());
         stopwatch.restartTimer();
-        NotificationUtil.showNotification("Finished logging for project - " + RepoHelper.getInstance().getCurrentBranch());
         dispose();
     }
 
@@ -62,8 +70,8 @@ public class TimeTaskDialog extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-        TimeTaskDialog dialog = new TimeTaskDialog();
+    public static void main(Project project) {
+        TimeTaskDialog dialog = new TimeTaskDialog(project);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);

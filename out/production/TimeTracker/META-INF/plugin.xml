@@ -2,27 +2,23 @@
   <id>com.wesleyelliott.timetracker</id>
   <name>Time Tracker</name>
   <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <vendor email="wesley@byteorbit.com">Wesley Elliott</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+ A Time Tracking plugin to keep tabs on time spent on tasks/projects<br>
+ The project is picked up on either your Git or Mecurial branch name. <br><br>
+ To START or RESUME logging time: <code>ctrl + cmd + NUM1</code><br>
+ To PAUSE logging time: <code>ctrl + cmd + NUM2</code><br>
+ To STOP or END logging time: <code>ctrl + cmd + NUM3</code>
+
     ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
     ]]>
   </change-notes>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
   <idea-version since-build="141.0"/>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
@@ -53,10 +49,6 @@
 
   <depends>Git4Idea</depends>
   <depends>hg4idea</depends>
-
-  <extensions defaultExtensionNs="com.intellij">
-    <projectService serviceImplementation="com.wesleyelliott.timetracker.config.TimeTrackerSettings" serviceInterface="com.wesleyelliott.timetracker.config.TimeTrackerSettings"/>
-  </extensions>
 
   <project-components>
     <component>

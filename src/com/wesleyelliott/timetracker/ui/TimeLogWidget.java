@@ -4,6 +4,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.StatusBarWidget;
 import com.intellij.openapi.wm.impl.status.EditorBasedWidget;
 import com.intellij.util.Consumer;
+import com.wesleyelliott.timetracker.util.FileUtil;
 import com.wesleyelliott.timetracker.util.RepoHelper;
 import com.wesleyelliott.timetracker.Stopwatch;
 import com.wesleyelliott.timetracker.util.StringUtil;
@@ -71,7 +72,14 @@ public class TimeLogWidget extends EditorBasedWidget implements  StatusBarWidget
     @Nullable
     @Override
     public Consumer<MouseEvent> getClickConsumer() {
-        return null;
+        return new Consumer<MouseEvent>() {
+            @Override
+            public void consume(MouseEvent mouseEvent) {
+                for (String line : FileUtil.getTaskHistory(myProject)) {
+                    System.out.println(line);
+                }
+            }
+        };
     }
 
     @Override

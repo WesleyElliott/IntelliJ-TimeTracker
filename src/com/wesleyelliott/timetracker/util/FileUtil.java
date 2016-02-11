@@ -1,60 +1,87 @@
 package com.wesleyelliott.timetracker.util;
 
 import com.intellij.openapi.project.Project;
-import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
-import java.util.Scanner;
+import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Wesley on 2016/02/11.
  */
 public class FileUtil {
 
-    private static final String SAVE_FILE = "/.idea/timeTracker.txt";
+    private static final String ELAPSED_TIME = "/.idea/timeTrackerCurrent.txt";
+    private static final String TASKS_HISTORY = "/.idea/timeTrackerHistory.txt";
 
     public static void saveElapsedTime(Project myProject, Long elapsedTime) {
+        Path fileP = Paths.get(myProject.getBasePath() + ELAPSED_TIME);
         try {
-            File file = new File(myProject.getBasePath() + SAVE_FILE);
-
-            if (!file.exists()) {
-                file.createNewFile();
+            if (!Files.exists(fileP)) {
+                Files.createFile(fileP);
             }
 
-            Writer out = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
-            try {
-                out.write(Long.toString(elapsedTime));
-            }
-            finally {
-                out.close();
-            }
+            Files.write(fileP, Long.toString(elapsedTime).getBytes("utf-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public static Long getElapsedTime(Project myProject) {
-        StringBuilder text = new StringBuilder();
-        Scanner scanner;
+
+        Path fileP = Paths.get(myProject.getBasePath() + ELAPSED_TIME);
+
         try {
-            File file = new File(myProject.getBasePath() + SAVE_FILE);
-
-            if (!file.exists()) {
-                file.createNewFile();
+            if (!Files.exists(fileP)) {
+                Files.createFile(fileP);
             }
 
-            scanner = new Scanner(new FileInputStream(myProject.getBasePath() + SAVE_FILE), "UTF-8");
-            while (scanner.hasNextLine()){
-                text.append(scanner.nextLine());
+            List<String> lines = Files.readAllLines(fileP);
+
+            if (lines.size() != 0) {
+                return Long.parseLong(lines.get(0));
             }
-            scanner.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (StringUtils.isEmpty(text.toString())) {
-            return 0L;
-        }
-        return Long.parseLong(text.toString());
+        return 0L;
     }
+
+    public static void saveTaskInHistory(Project myProject, String task, Long time) {
+        Path fileP = Paths.get(myProject.getBasePath() + TASKS_HISTORY);
+        String history = StringUtil.dateToString(System.currentTimeMillis()) + " - Task: " + task + " - Time: " + StringUtil.elapsedTimeToString(time) + "\n";
+        try {
+            if (!Files.exists(fileP)) {
+                Files.createFile(fileP);
+            }
+
+            Files.write(fileP, history.getBytes("utf-8"), StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static List<String> getTaskHistory(Project myProject) {
+
+        Path fileP = Paths.get(myProject.getBasePath() + TASKS_HISTORY);
+
+        try {
+            if (!Files.exists(fileP)) {
+                Files.createFile(fileP);
+            }
+
+            List<String> lines = Files.readAllLines(fileP);
+
+            if (lines.size() != 0) {
+                return lines;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ArrayList<>();
+    }
+
 }
