@@ -21,14 +21,6 @@ public class TimeTrackerTableModel extends DefaultTableModel {
     }
 
     @Override
-    public boolean isCellEditable(int row, int col) {
-        if (col == 2) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
     public void fireTableDataChanged() {
         super.fireTableDataChanged();
         List<String> newHistory = new ArrayList<>();
