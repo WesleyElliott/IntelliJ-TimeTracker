@@ -77,4 +77,8 @@ public class RepoHelper {
         return currentBranch;
     }
 
+    public String getCurrentTask(Project project) {
+        return project.getName() + " - " + getCurrentBranch(project);
+    }
+
 }

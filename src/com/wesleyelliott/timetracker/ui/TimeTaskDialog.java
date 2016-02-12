@@ -59,7 +59,7 @@ public class TimeTaskDialog extends JDialog {
     }
 
     private void onOK() {
-        FileUtil.saveTaskInHistory(project, RepoHelper.getInstance().getCurrentBranch(project), Stopwatch.getInstance().getElapsedTime());
+        FileUtil.saveTaskInHistory(project, RepoHelper.getInstance().getCurrentTask(project), Stopwatch.getInstance().getElapsedTime());
         FileUtil.saveElapsedTime(project, 0L);
         NotificationUtil.showNotification("Finished logging for task - " + RepoHelper.getInstance().getCurrentBranch());
         stopwatch.restartTimer();
