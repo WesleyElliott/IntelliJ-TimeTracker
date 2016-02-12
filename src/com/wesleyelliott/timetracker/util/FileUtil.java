@@ -33,7 +33,11 @@ public class FileUtil {
     }
 
     public static void saveTaskInHistory(Project myProject, String task, Long time) {
-        String history = StringUtil.dateToString(System.currentTimeMillis()) + "," + task + "," + StringUtil.elapsedTimeToString(time) + "\n";
+        saveTaskInHistory(myProject, task, StringUtil.dateToString(System.currentTimeMillis()), StringUtil.elapsedTimeToString(time));
+    }
+
+    public static void saveTaskInHistory(Project myProject, String task, String date, String time) {
+        String history = date + "," + task + "," + time + "\n";
         writeFile(myProject, TASKS_HISTORY, history, true);
     }
     public static List<String> getTaskHistory(Project myProject) {
