@@ -3,6 +3,7 @@ package com.wesleyelliott.timetracker.util;
 import com.intellij.openapi.project.Project;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public class FileUtil {
                 Files.createFile(fileP);
             }
 
-            List<String> lines = Files.readAllLines(fileP);
+            List<String> lines = Files.readAllLines(fileP, Charset.defaultCharset());
 
             if (lines.size() != 0) {
                 return lines;
