@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.wesleyelliott.timetracker.ui.HistoryDialog">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.wesleyelliott.timetracker.ui.ConfirmDialog">
   <grid id="cbd77" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="48" y="54" width="742" height="393"/>
+      <xy x="349" y="166" width="436" height="297"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -29,20 +29,20 @@
             <properties/>
             <border type="none"/>
             <children>
+              <component id="5723f" class="javax.swing.JButton" binding="buttonCancel">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Cancel"/>
+                </properties>
+              </component>
               <component id="e7465" class="javax.swing.JButton" binding="buttonOK">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="OK"/>
-                </properties>
-              </component>
-              <component id="290a2" class="javax.swing.JButton" binding="clearHistory">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Clear History"/>
+                  <text value="Yes"/>
                 </properties>
               </component>
             </children>
@@ -57,22 +57,14 @@
         <properties/>
         <border type="none"/>
         <children>
-          <scrollpane id="6ae03">
+          <component id="89fad" class="javax.swing.JLabel">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <component id="20fdf" class="javax.swing.JTable" binding="historyTable">
-                <constraints/>
-                <properties>
-                  <autoResizeMode value="4"/>
-                  <preferredScrollableViewportSize width="650" height="200"/>
-                </properties>
-              </component>
-            </children>
-          </scrollpane>
+            <properties>
+              <text value="Are you sure you want to clear your history?"/>
+            </properties>
+          </component>
         </children>
       </grid>
     </children>

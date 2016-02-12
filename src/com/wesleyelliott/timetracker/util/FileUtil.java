@@ -40,6 +40,10 @@ public class FileUtil {
         return readFile(myProject, TASKS_HISTORY);
     }
 
+    public static void clearHistory(Project myProject) {
+        clearFile(myProject, TASKS_HISTORY);
+    }
+
     private static List<String> readFile(Project myProject, String path) {
         Path fileP = Paths.get(myProject.getBasePath() + path);
 
@@ -79,6 +83,10 @@ public class FileUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void clearFile(Project mProject, String path) {
+        writeFile(mProject, path, "");
     }
 
 }

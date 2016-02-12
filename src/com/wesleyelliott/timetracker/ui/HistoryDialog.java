@@ -10,28 +10,25 @@ import java.awt.event.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class HistoryDialog extends JDialog {
+public class HistoryDialog extends JDialog implements ConfirmDialog.ConfirmListener {
     private static final String[] columnNames = {"Date", "Task", "Time Taken"};
 
     private JPanel contentPane;
     private JButton buttonOK;
     private JTable historyTable;
+    private JButton clearHistory;
     private Project project;
+    private DefaultTableModel model;
 
     public HistoryDialog(Project project) {
         this.project = project;
 
-        DefaultTableModel model = new DefaultTableModel();
+        model = new DefaultTableModel();
         historyTable.setModel(model);
 
         model.setColumnIdentifiers(columnNames);
 
-        List<String> lines = FileUtil.getTaskHistory(project);
-        lines = Lists.reverse(lines);
-        for (String line : lines) {
-            String[] data = line.split(",");
-            model.addRow(data);
-        }
+        updateDataModel();
 
         setContentPane(contentPane);
         setModal(true);
@@ -40,6 +37,13 @@ public class HistoryDialog extends JDialog {
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
+            }
+        });
+
+        clearHistory.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                ConfirmDialog.main(HistoryDialog.this);
             }
         });
 
@@ -59,12 +63,34 @@ public class HistoryDialog extends JDialog {
 
     }
 
+    private void updateDataModel() {
+        for (int i = model.getRowCount() - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+        List<String> lines = FileUtil.getTaskHistory(project);
+        lines = Lists.reverse(lines);
+        for (String line : lines) {
+            String[] data = line.split(",");
+            model.addRow(data);
+        }
+    }
+
     private void onOK() {
         dispose();
     }
 
     private void onCancel() {
         dispose();
+    }
+
+    private void onClearHistory() {
+        FileUtil.clearHistory(project);
+        updateDataModel();
+    }
+
+    @Override
+    public void onConfirmed() {
+        onClearHistory();
     }
 
     public static void main(Project project) {
