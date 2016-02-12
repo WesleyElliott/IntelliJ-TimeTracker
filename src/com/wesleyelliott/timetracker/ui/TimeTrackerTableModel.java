@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.intellij.openapi.project.Project;
 import com.wesleyelliott.timetracker.util.FileUtil;
 
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +22,14 @@ public class TimeTrackerTableModel extends DefaultTableModel {
     }
 
     @Override
-    public void fireTableDataChanged() {
-        super.fireTableDataChanged();
+    public void setValueAt(Object aValue, int row, int column) {
+        super.setValueAt(aValue, row, column);
+
         List<String> newHistory = new ArrayList<>();
 
         // Get Updated History
-        for (Object row : getDataVector()) {
-            Vector data = (Vector) row;
+        for (Object dataRow : getDataVector()) {
+            Vector data = (Vector) dataRow;
             String date = (String) data.get(0);
             String task = (String) data.get(1);
             String time = (String) data.get(2);

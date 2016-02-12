@@ -17,7 +17,6 @@ public class HistoryDialog extends JDialog implements ConfirmDialog.ConfirmListe
     private JButton buttonOK;
     private JTable historyTable;
     private JButton clearHistory;
-    private JButton saveChangesButton;
     private Project project;
     private TimeTrackerTableModel model;
 
@@ -46,13 +45,6 @@ public class HistoryDialog extends JDialog implements ConfirmDialog.ConfirmListe
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 ConfirmDialog.main(HistoryDialog.this);
-            }
-        });
-
-        saveChangesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                onSaveChanges();
             }
         });
 
@@ -95,10 +87,6 @@ public class HistoryDialog extends JDialog implements ConfirmDialog.ConfirmListe
     private void onClearHistory() {
         FileUtil.clearHistory(project);
         updateDataModel();
-    }
-
-    private void onSaveChanges() {
-        model.fireTableDataChanged();
     }
 
     @Override
