@@ -30,15 +30,18 @@
 
       <action id="timetracker.StartLogging" class="com.wesleyelliott.timetracker.actions.StartLogging" text="Start Logging Time">
         <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta NUMPAD1"/>
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta 1"/>
       </action>
 
       <action id="timetracker.StopLogging" class="com.wesleyelliott.timetracker.actions.StopLogging" text="Stop Logging">
         <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta NUMPAD2"/>
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta 2"/>
 
       </action>
 
       <action id="timetracker.FinishTask" class="com.wesleyelliott.timetracker.actions.FinishTask" text="Finish Task">
         <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta NUMPAD3"/>
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta 3"/>
       </action>
 
       <add-to-group group-id="ToolsMenu" anchor="first"/>
