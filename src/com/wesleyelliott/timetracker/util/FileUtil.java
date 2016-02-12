@@ -16,56 +16,32 @@ public class FileUtil {
     private static final String TASKS_HISTORY = "/.idea/timeTrackerHistory.txt";
 
     public static void saveElapsedTime(Project myProject, Long elapsedTime) {
-        Path fileP = Paths.get(myProject.getBasePath() + ELAPSED_TIME);
-        try {
-            if (!Files.exists(fileP)) {
-                Files.createFile(fileP);
-            }
-
-            Files.write(fileP, Long.toString(elapsedTime).getBytes("utf-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        writeFile(myProject, ELAPSED_TIME, Long.toString(elapsedTime));
     }
 
     public static Long getElapsedTime(Project myProject) {
-
-        Path fileP = Paths.get(myProject.getBasePath() + ELAPSED_TIME);
+        List<String> lines = readFile(myProject, ELAPSED_TIME);
 
         try {
-            if (!Files.exists(fileP)) {
-                Files.createFile(fileP);
-            }
-
-            List<String> lines = Files.readAllLines(fileP);
-
-            if (lines.size() != 0) {
+            if (lines.size() > 0) {
                 return Long.parseLong(lines.get(0));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            return 0L;
+        } catch (Exception e) {
+            return 0L;
         }
-
-        return 0L;
     }
 
     public static void saveTaskInHistory(Project myProject, String task, Long time) {
-        Path fileP = Paths.get(myProject.getBasePath() + TASKS_HISTORY);
-        String history = StringUtil.dateToString(System.currentTimeMillis()) + " - Task: " + task + " - Time: " + StringUtil.elapsedTimeToString(time) + "\n";
-        try {
-            if (!Files.exists(fileP)) {
-                Files.createFile(fileP);
-            }
-
-            Files.write(fileP, history.getBytes("utf-8"), StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String history = StringUtil.dateToString(System.currentTimeMillis()) + "," + task + "," + StringUtil.elapsedTimeToString(time) + "\n";
+        writeFile(myProject, TASKS_HISTORY, history, true);
     }
     public static List<String> getTaskHistory(Project myProject) {
+        return readFile(myProject, TASKS_HISTORY);
+    }
 
-        Path fileP = Paths.get(myProject.getBasePath() + TASKS_HISTORY);
+    private static List<String> readFile(Project myProject, String path) {
+        Path fileP = Paths.get(myProject.getBasePath() + path);
 
         try {
             if (!Files.exists(fileP)) {
@@ -78,10 +54,31 @@ public class FileUtil {
                 return lines;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            return new ArrayList<>();
         }
 
         return new ArrayList<>();
+    }
+
+    private static void writeFile(Project myProject, String path, String value) {
+        writeFile(myProject, path, value, false);
+    }
+
+    private static void writeFile(Project myProject, String path, String value, boolean append) {
+        Path fileP = Paths.get(myProject.getBasePath() + path);
+        try {
+            if (!Files.exists(fileP)) {
+                Files.createFile(fileP);
+            }
+
+            if (append) {
+                Files.write(fileP, value.getBytes("utf-8"), StandardOpenOption.APPEND);
+            } else {
+                Files.write(fileP, value.getBytes("utf-8"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -75,9 +75,7 @@ public class TimeLogWidget extends EditorBasedWidget implements  StatusBarWidget
         return new Consumer<MouseEvent>() {
             @Override
             public void consume(MouseEvent mouseEvent) {
-                for (String line : FileUtil.getTaskHistory(myProject)) {
-                    System.out.println(line);
-                }
+                HistoryDialog.main(myProject);
             }
         };
     }

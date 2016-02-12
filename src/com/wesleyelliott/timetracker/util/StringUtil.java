@@ -20,7 +20,7 @@ public class StringUtil {
     public static String dateToString(long time) {
         Date date = new Date(time);
         DateFormat formatter = new SimpleDateFormat("yyyy/MM/d - HH:mm:ss");
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+2"));
         return formatter.format(date);
     }
 }
