@@ -7,9 +7,9 @@
   <description><![CDATA[
  A Time Tracking plugin to keep tabs on time spent on tasks/projects<br>
  The project is picked up on either your Git or Mecurial branch name. <br><br>
- To START or RESUME logging time: <code>ctrl + cmd + NUM1</code><br>
- To PAUSE logging time: <code>ctrl + cmd + NUM2</code><br>
- To STOP or END logging time: <code>ctrl + cmd + NUM3</code>
+ To START or RESUME logging time: <code>ctrl + alt + NUM1</code><br>
+ To PAUSE logging time: <code>ctrl + alt + NUM2</code><br>
+ To STOP or END logging time: <code>ctrl + alt + NUM3</code>
 
     ]]></description>
 
@@ -26,22 +26,22 @@
 
   <actions>
     <!-- Add your actions here -->
-    <group id="timetracker.TimeLogging" text="Time Logger" popup="true">
+    <group id="timetracker.TimeLogging" text="Time Tracker" popup="true">
 
-      <action id="timetracker.StartLogging" class="com.wesleyelliott.timetracker.actions.StartLogging" text="Start Logging Time">
-        <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta NUMPAD1"/>
-        <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta 1"/>
+      <action id="timetracker.StartLogging" class="com.wesleyelliott.timetracker.actions.StartLogging" text="Start Logging">
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt NUMPAD1"/>
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 1"/>
       </action>
 
       <action id="timetracker.StopLogging" class="com.wesleyelliott.timetracker.actions.StopLogging" text="Stop Logging">
-        <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta NUMPAD2"/>
-        <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta 2"/>
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt NUMPAD2"/>
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 2"/>
 
       </action>
 
       <action id="timetracker.FinishTask" class="com.wesleyelliott.timetracker.actions.FinishTask" text="Finish Task">
-        <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta NUMPAD3"/>
-        <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta 3"/>
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt NUMPAD3"/>
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt 3"/>
       </action>
 
       <add-to-group group-id="ToolsMenu" anchor="first"/>
