@@ -1,5 +1,6 @@
 package com.wesleyelliott.timetracker;
 
+import com.wesleyelliott.timetracker.util.FileUtil;
 import org.apache.commons.lang.time.StopWatch;
 
 import java.util.Timer;
@@ -13,14 +14,17 @@ public class Stopwatch extends TimerTask {
 
     public interface TimeUpdateListener {
         void onTimeUpdated(long elapsedTime);
+        void onSaveTime(long time);
     }
 
     private StopWatch stopWatch;
+    private StopWatch saveWatch;
     private boolean isRunning;
     private boolean hasStarted;
     private Timer timer;
     private TimeUpdateListener timeUpdateListener;
     private long elapsedTime = 0;
+    private long startTime = 0;
 
     public static Stopwatch getInstance() {
         return ourInstance;
@@ -28,6 +32,7 @@ public class Stopwatch extends TimerTask {
 
     private Stopwatch() {
         stopWatch = new StopWatch();
+        saveWatch = new StopWatch();
         isRunning = false;
         hasStarted = false;
         timer = new Timer();
@@ -36,6 +41,7 @@ public class Stopwatch extends TimerTask {
 
     public void startTimer() {
         stopWatch.start();
+        saveWatch.start();
         isRunning = true;
         hasStarted = true;
     }
@@ -43,6 +49,7 @@ public class Stopwatch extends TimerTask {
     public void stopTimer() {
         if (isRunning) {
             stopWatch.stop();
+            saveWatch.stop();
             timer.cancel();
             timer.purge();
         }
@@ -51,27 +58,30 @@ public class Stopwatch extends TimerTask {
 
     public void pauseTimer() {
         stopWatch.suspend();
+        saveWatch.suspend();
         isRunning = false;
     }
 
     public void resumeTimer() {
         stopWatch.resume();
+        saveWatch.resume();
         isRunning = true;
     }
 
     public void restartTimer() {
         stopWatch.reset();
+        saveWatch.reset();
         isRunning = false;
         hasStarted = false;
         elapsedTime = 0;
     }
 
     public long getElapsedTime() {
-        return elapsedTime + stopWatch.getTime();
+        return elapsedTime;
     }
 
     public void setElapsedTime(long elapsedTime) {
-        this.elapsedTime = elapsedTime;
+        this.startTime = elapsedTime;
     }
 
     public boolean isRunning() {
@@ -88,8 +98,15 @@ public class Stopwatch extends TimerTask {
 
     @Override
     public void run() {
+        elapsedTime = startTime + stopWatch.getTime();
         if (timeUpdateListener != null) {
             timeUpdateListener.onTimeUpdated(getElapsedTime());
+        }
+
+        if (saveWatch.getTime() >= 30 * 60 * 1000) { // 30 * 60 * 1000 = 30 min
+            timeUpdateListener.onSaveTime(getElapsedTime());
+            saveWatch.reset();
+            saveWatch.start();
         }
     }
 }

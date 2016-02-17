@@ -22,7 +22,7 @@ public class TimeLogWidget extends EditorBasedWidget implements  StatusBarWidget
 
     public static final String id = TimeLogWidget.class.getName();
 
-    private String text = StringUtil.elapsedTimeToString(0);
+    private String text = StringUtil.elapsedTimeToString(Stopwatch.getInstance().getElapsedTime());
     private final AtomicBoolean opened = new AtomicBoolean();
 
     public TimeLogWidget(@NotNull Project project) {
@@ -86,6 +86,12 @@ public class TimeLogWidget extends EditorBasedWidget implements  StatusBarWidget
         if (myStatusBar != null) {
             myStatusBar.updateWidget(id);
         }
+    }
+
+    @Override
+    public void onSaveTime(long time) {
+        FileUtil.saveElapsedTime(myProject, time);
+        System.out.println("30 min... Saving project time");
     }
 
     public void installed() {
