@@ -25,6 +25,7 @@ public class Stopwatch extends TimerTask {
     private TimeUpdateListener timeUpdateListener;
     private long elapsedTime = 0;
     private long startTime = 0;
+    private long discardedTime = 0;
 
     public static Stopwatch getInstance() {
         return ourInstance;
@@ -96,14 +97,18 @@ public class Stopwatch extends TimerTask {
         this.timeUpdateListener = listener;
     }
 
+    public void addDiscardedTime(long discardedTime) {
+        this.discardedTime = this.discardedTime + discardedTime;
+    }
+
     @Override
     public void run() {
-        elapsedTime = startTime + stopWatch.getTime();
+        elapsedTime = startTime + stopWatch.getTime() - discardedTime;
         if (timeUpdateListener != null) {
             timeUpdateListener.onTimeUpdated(getElapsedTime());
         }
 
-        if (saveWatch.getTime() >= 30 * 60 * 1000) { // 30 * 60 * 1000 = 30 min
+        if (saveWatch.getTime() >= 10 * 60 * 1000) { // 30 * 60 * 1000 = 30 min
             timeUpdateListener.onSaveTime(getElapsedTime());
             saveWatch.reset();
             saveWatch.start();

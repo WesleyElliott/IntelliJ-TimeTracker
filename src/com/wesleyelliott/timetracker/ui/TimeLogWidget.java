@@ -1,10 +1,18 @@
 package com.wesleyelliott.timetracker.ui;
 
+import com.intellij.execution.filters.TextConsoleBuilderFactory;
+import com.intellij.execution.ui.ConsoleView;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.StatusBarWidget;
 import com.intellij.openapi.wm.impl.status.EditorBasedWidget;
+import com.intellij.ui.content.impl.MessageViewImpl;
 import com.intellij.util.Consumer;
+import com.intellij.util.MessageBusUtil;
+import com.intellij.util.messages.MessageBus;
+import com.intellij.util.messages.MessageBusFactory;
+import com.intellij.util.messages.impl.Message;
 import com.wesleyelliott.timetracker.util.FileUtil;
+import com.wesleyelliott.timetracker.util.NotificationUtil;
 import com.wesleyelliott.timetracker.util.RepoHelper;
 import com.wesleyelliott.timetracker.Stopwatch;
 import com.wesleyelliott.timetracker.util.StringUtil;
@@ -91,7 +99,7 @@ public class TimeLogWidget extends EditorBasedWidget implements  StatusBarWidget
     @Override
     public void onSaveTime(long time) {
         FileUtil.saveElapsedTime(myProject, time);
-        System.out.println("30 min... Saving project time");
+        NotificationUtil.LogNotification("Auto saving TimeTracker for " + myProject.getName());
     }
 
     public void installed() {
