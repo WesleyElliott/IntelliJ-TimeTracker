@@ -17,7 +17,6 @@ public class TimeTaskDialog extends JDialog {
     private JLabel timeElapsedLabel;
     private JLabel projectLabel;
     private JButton buttonNo;
-    private Stopwatch stopwatch = Stopwatch.getInstance();
     private RepoHelper repoHelper = RepoHelper.getInstance();
 
     private Project project;
@@ -54,15 +53,15 @@ public class TimeTaskDialog extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        timeElapsedLabel.setText("Time Taken: " +  StringUtil.elapsedTimeToString(stopwatch.getElapsedTime()));
+        timeElapsedLabel.setText("Time Taken: " +  StringUtil.elapsedTimeToString(Stopwatch.getInstance(project.getName()).getElapsedTime()));
         projectLabel.setText("Task: " + repoHelper.getCurrentBranch());
     }
 
     private void onOK() {
-        FileUtil.saveTaskInHistory(project, RepoHelper.getInstance().getCurrentTask(project), Stopwatch.getInstance().getElapsedTime());
+        FileUtil.saveTaskInHistory(project, RepoHelper.getInstance().getCurrentTask(project), Stopwatch.getInstance(project.getName()).getElapsedTime());
         FileUtil.saveElapsedTime(project, 0L);
-        NotificationUtil.showNotification("Finished logging for task - " + RepoHelper.getInstance().getCurrentBranch());
-        stopwatch.restartTimer();
+        NotificationUtil.showNotification("Finished logging for task - " + RepoHelper.getInstance().getCurrentBranch(), project);
+        Stopwatch.getInstance(project.getName()).restartTimer();
         dispose();
     }
 

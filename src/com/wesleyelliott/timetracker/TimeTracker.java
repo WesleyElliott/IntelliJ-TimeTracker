@@ -43,17 +43,17 @@ public class TimeTracker extends AbstractProjectComponent implements IdleTimeDia
     public void projectOpened() {
         projectAwares.opened();
         Long elapsedTime = FileUtil.getElapsedTime(myProject);
-        Stopwatch.getInstance().setElapsedTime(elapsedTime);
+        Stopwatch.getInstance(myProject.getName()).setElapsedTime(elapsedTime);
         startIdleWatch();
     }
 
     @Override
     public void projectClosed() {
-        Long elapsedTime = Stopwatch.getInstance().getElapsedTime();
+        Long elapsedTime = Stopwatch.getInstance(myProject.getName()).getElapsedTime();
         FileUtil.saveElapsedTime(myProject, elapsedTime);
 
         projectAwares.closed();
-        Stopwatch.getInstance().restartTimer();
+        Stopwatch.getInstance(myProject.getName()).restartTimer();
     }
 
     private void startIdleWatch() {
@@ -64,7 +64,7 @@ public class TimeTracker extends AbstractProjectComponent implements IdleTimeDia
         @Override
         public void run() {
             long idleTime = OSxIdleTime.getIdleTimeMillis();
-            if (idleTime > TimeTracker.IDLE_TIME && Stopwatch.getInstance().isRunning()) {
+            if (idleTime > TimeTracker.IDLE_TIME && Stopwatch.getInstance(myProject.getName()).isRunning()) {
                 System.out.println("IDLE FOR " + StringUtil.elapsedTimeToString(idleTime));
 
                 if (!isIdleDialogShowing) {
@@ -78,8 +78,8 @@ public class TimeTracker extends AbstractProjectComponent implements IdleTimeDia
     @Override
     public void onDiscardTime(long idleTime) {
         System.out.println("Discarding Idle Time:  " + StringUtil.elapsedTimeToString(idleTime));
-        Stopwatch.getInstance().addDiscardedTime(idleTime);
-        Stopwatch.getInstance().pauseTimer();
+        Stopwatch.getInstance(myProject.getName()).addDiscardedTime(idleTime);
+        Stopwatch.getInstance(myProject.getName()).pauseTimer();
         isIdleDialogShowing = false;
     }
 

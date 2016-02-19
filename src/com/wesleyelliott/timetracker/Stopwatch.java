@@ -3,6 +3,7 @@ package com.wesleyelliott.timetracker;
 import com.wesleyelliott.timetracker.util.FileUtil;
 import org.apache.commons.lang.time.StopWatch;
 
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -10,7 +11,7 @@ import java.util.TimerTask;
  * Created by Wesley on 2016/02/10.
  */
 public class Stopwatch extends TimerTask {
-    private static Stopwatch ourInstance = new Stopwatch();
+    private static HashMap<String, Stopwatch> instances = new HashMap<>();
 
     public interface TimeUpdateListener {
         void onTimeUpdated(long elapsedTime);
@@ -27,8 +28,11 @@ public class Stopwatch extends TimerTask {
     private long startTime = 0;
     private long discardedTime = 0;
 
-    public static Stopwatch getInstance() {
-        return ourInstance;
+    public static Stopwatch getInstance(String projectName) {
+        if (instances.get(projectName) == null) {
+            instances.put(projectName, new Stopwatch());
+        }
+        return instances.get(projectName);
     }
 
     private Stopwatch() {

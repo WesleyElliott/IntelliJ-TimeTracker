@@ -15,24 +15,35 @@ public class NotificationUtil {
     public static final NotificationGroup GROUP_DISPLAY_ID_INFO_LOG = new NotificationGroup("TimeTrackerGroup", NotificationDisplayType.NONE, true);
     public static final Logger LogUtil = Logger.getInstance("#com.intellij.notification.NotificationGroup");
 
-    public static void showNotification(final String message) {
+    public static void showNotification(final String message, final Project project) {
         ApplicationManager.getApplication().invokeLater(new Runnable() {
             @Override
             public void run() {
                 Notification notification = GROUP_DISPLAY_ID_INFO.createNotification(message, NotificationType.INFORMATION);
                 Project[] projects = ProjectManager.getInstance().getOpenProjects();
-                Notifications.Bus.notify(notification, projects[0]);
+                for (Project openProject : projects) {
+                    if (project.getName().equalsIgnoreCase(openProject.getName())) {
+                        Notifications.Bus.notify(notification, project);
+                        break;
+                    }
+                }
+
             }
         });
     }
 
-    public static void LogNotification(final String message) {
+    public static void LogNotification(final String message, final Project project) {
         ApplicationManager.getApplication().invokeLater(new Runnable() {
             @Override
             public void run() {
                 Notification notification = GROUP_DISPLAY_ID_INFO_LOG.createNotification(message, NotificationType.INFORMATION);
                 Project[] projects = ProjectManager.getInstance().getOpenProjects();
-                Notifications.Bus.notify(notification, projects[0]);
+                for (Project openProject : projects) {
+                    if (project.getName().equalsIgnoreCase(openProject.getName())) {
+                        Notifications.Bus.notify(notification, project);
+                        break;
+                    }
+                }
             }
         });
     }

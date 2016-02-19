@@ -10,12 +10,11 @@ import com.wesleyelliott.timetracker.ui.TimeTaskDialog;
  */
 public class FinishTask extends AnAction {
 
-    private Stopwatch stopwatch = Stopwatch.getInstance();
 
     @Override
     public void update(AnActionEvent e) {
         super.update(e);
-        if (stopwatch.isRunning()) {
+        if (Stopwatch.getInstance(e.getProject().getName()).isRunning()) {
             e.getPresentation().setEnabled(false);
         } else {
             e.getPresentation().setEnabled(true);
@@ -24,7 +23,7 @@ public class FinishTask extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        stopwatch.stopTimer();
+        Stopwatch.getInstance(e.getProject().getName()).stopTimer();
         TimeTaskDialog.main(e.getProject());
     }
 }

@@ -11,12 +11,10 @@ import com.wesleyelliott.timetracker.Stopwatch;
  */
 public class StartLogging extends DumbAwareAction {
 
-    private Stopwatch stopwatch = Stopwatch.getInstance();
-
     @Override
     public void update(AnActionEvent e) {
         super.update(e);
-        if (stopwatch.isRunning()) {
+        if (Stopwatch.getInstance(e.getProject().getName()).isRunning()) {
             e.getPresentation().setEnabled(false);
         } else {
             e.getPresentation().setEnabled(true);
@@ -25,12 +23,12 @@ public class StartLogging extends DumbAwareAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        NotificationUtil.showNotification("Started logging for task - " + RepoHelper.getInstance().getCurrentBranch(getEventProject(e)));
+        NotificationUtil.showNotification("Started logging for task - " + RepoHelper.getInstance().getCurrentBranch(getEventProject(e)), getEventProject(e));
 
-        if (stopwatch.hasStarted()) {
-            stopwatch.resumeTimer();
+        if (Stopwatch.getInstance(e.getProject().getName()).hasStarted()) {
+            Stopwatch.getInstance(e.getProject().getName()).resumeTimer();
         } else {
-            stopwatch.startTimer();
+            Stopwatch.getInstance(e.getProject().getName()).startTimer();
         }
     }
 

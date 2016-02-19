@@ -30,12 +30,13 @@ public class TimeLogWidget extends EditorBasedWidget implements  StatusBarWidget
 
     public static final String id = TimeLogWidget.class.getName();
 
-    private String text = StringUtil.elapsedTimeToString(Stopwatch.getInstance().getElapsedTime());
+    private String text = "";
     private final AtomicBoolean opened = new AtomicBoolean();
 
     public TimeLogWidget(@NotNull Project project) {
         super(project);
-        Stopwatch.getInstance().setOnTimeUpdateListener(this);
+        Stopwatch.getInstance(project.getName()).setOnTimeUpdateListener(this);
+        text= StringUtil.elapsedTimeToString(Stopwatch.getInstance(project.getName()).getElapsedTime());
     }
 
     public static TimeLogWidget create(@NotNull Project project) {
@@ -99,7 +100,7 @@ public class TimeLogWidget extends EditorBasedWidget implements  StatusBarWidget
     @Override
     public void onSaveTime(long time) {
         FileUtil.saveElapsedTime(myProject, time);
-        NotificationUtil.LogNotification("Auto saving TimeTracker for " + myProject.getName());
+        NotificationUtil.LogNotification("Auto saving TimeTracker for " + myProject.getName(), myProject);
     }
 
     public void installed() {

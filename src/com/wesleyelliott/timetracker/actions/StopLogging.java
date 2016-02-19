@@ -11,12 +11,10 @@ import com.wesleyelliott.timetracker.Stopwatch;
  */
 public class StopLogging extends AnAction {
 
-    private Stopwatch stopwatch = Stopwatch.getInstance();
-
     @Override
     public void update(AnActionEvent e) {
         super.update(e);
-        if (stopwatch.isRunning()) {
+        if (Stopwatch.getInstance(e.getProject().getName()).isRunning()) {
             e.getPresentation().setEnabled(true);
         } else {
             e.getPresentation().setEnabled(false);
@@ -25,7 +23,7 @@ public class StopLogging extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        NotificationUtil.showNotification("Stopped logging for task - " + RepoHelper.getInstance().getCurrentBranch(getEventProject(e)));
-        stopwatch.pauseTimer();
+        NotificationUtil.showNotification("Stopped logging for task - " + RepoHelper.getInstance().getCurrentBranch(getEventProject(e)), getEventProject(e));
+        Stopwatch.getInstance(e.getProject().getName()).pauseTimer();
     }
 }
