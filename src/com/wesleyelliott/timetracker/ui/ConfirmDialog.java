@@ -63,6 +63,7 @@ public class ConfirmDialog extends JDialog {
         ConfirmDialog dialog = new ConfirmDialog();
         dialog.setConfirmListener(listener);
         dialog.pack();
+        dialog.setAlwaysOnTop(true);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }

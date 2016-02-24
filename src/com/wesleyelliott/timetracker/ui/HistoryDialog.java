@@ -98,6 +98,7 @@ public class HistoryDialog extends JDialog implements ConfirmDialog.ConfirmListe
         HistoryDialog dialog = new HistoryDialog(project);
         dialog.pack();
         dialog.setLocationRelativeTo(null);
+        dialog.setAlwaysOnTop(true);
         dialog.setVisible(true);
     }
 

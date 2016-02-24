@@ -98,6 +98,7 @@ public class IdleTimeDialog extends JDialog {
         IdleTimeDialog dialog = new IdleTimeDialog();
         dialog.setConfirmListener(listener);
         dialog.pack();
+        dialog.setAlwaysOnTop(true);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }

@@ -72,6 +72,7 @@ public class TimeTaskDialog extends JDialog {
     public static void main(Project project) {
         TimeTaskDialog dialog = new TimeTaskDialog(project);
         dialog.pack();
+        dialog.setAlwaysOnTop(true);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
