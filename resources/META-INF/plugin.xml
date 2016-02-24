@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.wesleyelliott.timetracker</id>
   <name>Time Tracker</name>
-  <version>1.4</version>
+  <version>1.5</version>
   <vendor email="wesley@byteorbit.com">Wesley Elliott</vendor>
 
   <description><![CDATA[
@@ -11,9 +11,12 @@
  To PAUSE logging time: <code>ctrl + alt + NUM2</code><br>
  To STOP or END logging time: <code>ctrl + alt + NUM3</code>
 
+ Settings for auto saving and idle time can be adjusted in Preferences
+
     ]]></description>
 
   <change-notes><![CDATA[
+    New settings for idle time and auto saving
     ]]>
   </change-notes>
 
