@@ -1,6 +1,7 @@
 package com.wesleyelliott.timetracker.ui;
 
 import com.wesleyelliott.timetracker.TimeTracker;
+import com.wesleyelliott.timetracker.settings.TimeTrackerAppSettings;
 import com.wesleyelliott.timetracker.util.OSxIdleTime;
 import com.wesleyelliott.timetracker.util.StringUtil;
 
@@ -78,7 +79,8 @@ public class IdleTimeDialog extends JDialog {
         @Override
         public void run() {
             long idleTime = OSxIdleTime.getIdleTimeMillis();
-            if (idleTime > TimeTracker.IDLE_TIME) {
+            long idleTimeLimit = TimeTrackerAppSettings.getInstance().getIdleTimeLimit();
+            if (idleTime > idleTimeLimit) {
                 IdleTimeDialog.this.idleTime = idleTime;
                 updateUI();
             }

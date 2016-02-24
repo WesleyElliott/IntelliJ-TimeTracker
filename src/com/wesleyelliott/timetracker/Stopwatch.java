@@ -1,5 +1,6 @@
 package com.wesleyelliott.timetracker;
 
+import com.wesleyelliott.timetracker.settings.TimeTrackerAppSettings;
 import com.wesleyelliott.timetracker.util.FileUtil;
 import org.apache.commons.lang.time.StopWatch;
 
@@ -46,7 +47,6 @@ public class Stopwatch extends TimerTask {
 
     public void startTimer() {
         stopWatch.start();
-        saveWatch.start();
         isRunning = true;
         hasStarted = true;
     }
@@ -81,6 +81,14 @@ public class Stopwatch extends TimerTask {
         elapsedTime = 0;
     }
 
+    public void startSaveWatch() {
+        saveWatch.start();
+    }
+
+    public void stopSaveWatch() {
+        saveWatch.stop();
+    }
+
     public long getElapsedTime() {
         return elapsedTime;
     }
@@ -112,10 +120,12 @@ public class Stopwatch extends TimerTask {
             timeUpdateListener.onTimeUpdated(getElapsedTime());
         }
 
-        if (saveWatch.getTime() >= 10 * 60 * 1000) { // 30 * 60 * 1000 = 30 min
-            timeUpdateListener.onSaveTime(getElapsedTime());
-            saveWatch.reset();
-            saveWatch.start();
+        if (TimeTrackerAppSettings.getInstance().getAutoSave()) {
+            if (saveWatch.getTime() >= TimeTrackerAppSettings.getInstance().getAutoSaveTime()) {
+                timeUpdateListener.onSaveTime(getElapsedTime());
+                saveWatch.reset();
+                saveWatch.start();
+            }
         }
     }
 }

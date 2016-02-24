@@ -2,6 +2,7 @@ package com.wesleyelliott.timetracker;
 
 import com.intellij.openapi.components.*;
 import com.intellij.openapi.project.Project;
+import com.wesleyelliott.timetracker.settings.TimeTrackerAppSettings;
 import com.wesleyelliott.timetracker.ui.IdleTimeDialog;
 import com.wesleyelliott.timetracker.ui.StatusBarManager;
 import com.wesleyelliott.timetracker.util.*;
@@ -13,8 +14,6 @@ import java.util.TimerTask;
  * Created by Wesley on 2016/02/11.
  */
 public class TimeTracker extends AbstractProjectComponent implements IdleTimeDialog.DiscardIdleTimeListener {
-
-    public static long IDLE_TIME = 5 * 60 * 1000;
 
     public TimeTracker(Project project) {
         super(project);
@@ -44,6 +43,7 @@ public class TimeTracker extends AbstractProjectComponent implements IdleTimeDia
         projectAwares.opened();
         Long elapsedTime = FileUtil.getElapsedTime(myProject);
         Stopwatch.getInstance(myProject.getName()).setElapsedTime(elapsedTime);
+        Stopwatch.getInstance(myProject.getName()).startSaveWatch();
         startIdleWatch();
     }
 
@@ -54,6 +54,7 @@ public class TimeTracker extends AbstractProjectComponent implements IdleTimeDia
 
         projectAwares.closed();
         Stopwatch.getInstance(myProject.getName()).restartTimer();
+        Stopwatch.getInstance(myProject.getName()).stopSaveWatch();
     }
 
     private void startIdleWatch() {
@@ -64,7 +65,8 @@ public class TimeTracker extends AbstractProjectComponent implements IdleTimeDia
         @Override
         public void run() {
             long idleTime = OSxIdleTime.getIdleTimeMillis();
-            if (idleTime > TimeTracker.IDLE_TIME && Stopwatch.getInstance(myProject.getName()).isRunning()) {
+            long idleTimeLimit = TimeTrackerAppSettings.getInstance().getIdleTimeLimit();
+            if (idleTime > idleTimeLimit && Stopwatch.getInstance(myProject.getName()).isRunning()) {
                 System.out.println("IDLE FOR " + StringUtil.elapsedTimeToString(idleTime));
 
                 if (!isIdleDialogShowing) {

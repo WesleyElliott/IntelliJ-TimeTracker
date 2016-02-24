@@ -22,6 +22,10 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
+    <applicationConfigurable instance="com.wesleyelliott.timetracker.settings.TimeTrackerConfigurable" />
+
+    <applicationService serviceInterface="com.wesleyelliott.timetracker.settings.TimeTrackerAppSettings"
+                        serviceImplementation="com.wesleyelliott.timetracker.settings.TimeTrackerAppSettings"/>
   </extensions>
 
   <actions>

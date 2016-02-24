@@ -13,7 +13,6 @@ public class NotificationUtil {
 
     public static final NotificationGroup GROUP_DISPLAY_ID_INFO = new NotificationGroup("TimeTrackerGroup", NotificationDisplayType.BALLOON, true);
     public static final NotificationGroup GROUP_DISPLAY_ID_INFO_LOG = new NotificationGroup("TimeTrackerGroup", NotificationDisplayType.NONE, true);
-    public static final Logger LogUtil = Logger.getInstance("#com.intellij.notification.NotificationGroup");
 
     public static void showNotification(final String message, final Project project) {
         ApplicationManager.getApplication().invokeLater(new Runnable() {
