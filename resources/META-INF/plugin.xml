@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>com.wesleyelliott.timetracker</id>
   <name>Time Tracker</name>
-  <version>1.5</version>
+  <version>1.6</version>
   <vendor email="wesley@byteorbit.com">Wesley Elliott</vendor>
 
   <description><![CDATA[
@@ -16,7 +16,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
-    New settings for idle time and auto saving
+    Bug fix for auto save watch
     ]]>
   </change-notes>
 
