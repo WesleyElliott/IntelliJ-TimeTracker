@@ -54,7 +54,6 @@ public class Stopwatch extends TimerTask {
     public void stopTimer() {
         if (isRunning) {
             stopWatch.stop();
-            saveWatch.stop();
             timer.cancel();
             timer.purge();
         }
@@ -63,19 +62,16 @@ public class Stopwatch extends TimerTask {
 
     public void pauseTimer() {
         stopWatch.suspend();
-        saveWatch.suspend();
         isRunning = false;
     }
 
     public void resumeTimer() {
         stopWatch.resume();
-        saveWatch.resume();
         isRunning = true;
     }
 
     public void restartTimer() {
         stopWatch.reset();
-        saveWatch.reset();
         isRunning = false;
         hasStarted = false;
         elapsedTime = 0;
