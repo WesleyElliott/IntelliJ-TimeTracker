@@ -77,12 +77,18 @@ public class Stopwatch extends TimerTask {
         elapsedTime = 0;
     }
 
+    public void clearTimes() {
+        startTime = 0;
+        discardedTime = 0;
+    }
+
     public void startSaveWatch() {
         saveWatch.start();
     }
 
     public void stopSaveWatch() {
         saveWatch.stop();
+        saveWatch.reset();
     }
 
     public long getElapsedTime() {
